@@ -39,14 +39,14 @@ Qwt_MainWindow::Qwt_MainWindow(QWidget *parent) : QWidget(parent)
     leftPressurePlot->setAxisLabelAlignment( QwtPlot::xBottom, Qt::AlignHCenter | Qt::AlignBottom );
     leftPressurePlot->setAxisLabelAlignment( QwtPlot::yLeft, Qt::AlignVCenter);
 
-    //QPen leftInPressurePen = QPen(Qt::red);
+    QPen leftInPressurePen = QPen(Qt::red);
     QPen leftExchangerPressurePen = QPen(Qt::blue);
 
-    //leftInPressureCurve = new QwtPlotCurve("Входное давление");
-    //leftInPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-    //leftInPressureCurve->setPen(leftInPressurePen);
-    //leftInPressureCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine, true);
-    //leftInPressureCurve->attach(leftPressurePlot);
+    leftInPressureCurve = new QwtPlotCurve("");
+    leftInPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    leftInPressureCurve->setPen(leftInPressurePen);
+    leftInPressureCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine, true);
+    leftInPressureCurve->attach(leftPressurePlot);
 
     leftExchangerPressureCurve = new QwtPlotCurve("Давление в теплообменнике");
     leftExchangerPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -66,14 +66,14 @@ Qwt_MainWindow::Qwt_MainWindow(QWidget *parent) : QWidget(parent)
     rightPressurePlot->setAxisLabelAlignment( QwtPlot::xBottom, Qt::AlignHCenter | Qt::AlignBottom );
     rightPressurePlot->setAxisLabelAlignment( QwtPlot::yLeft, Qt::AlignVCenter);
 
-    //QPen rightInPressurePen = QPen(Qt::red);
+    QPen rightInPressurePen = QPen(Qt::red);
     QPen rightExchangerPressurePen = QPen(Qt::blue);
 
-    //rightInPressureCurve = new QwtPlotCurve("Входное давление");
-    //rightInPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-    //rightInPressureCurve->setPen(rightInPressurePen);
-    //rightInPressureCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine, true);
-    //rightInPressureCurve->attach(rightPressurePlot);
+    rightInPressureCurve = new QwtPlotCurve("");
+    rightInPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    rightInPressureCurve->setPen(rightInPressurePen);
+    rightInPressureCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine, true);
+    rightInPressureCurve->attach(rightPressurePlot);
 
     rightExchangerPressureCurve = new QwtPlotCurve("Давление в теплообменнике");
     rightExchangerPressureCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -1010,10 +1010,10 @@ void Qwt_MainWindow::leftNextTick()
 
         x[this->leftTick] = this->leftTick;
         leftExData[this->leftTick] = leftExchangerPressureEntry->text().toDouble();
-        leftInData[this->leftTick] = leftinPressureEntry->text().toDouble();
+        leftInData[this->leftTick] = 6.0;
 
         leftExchangerPressureCurve->setSamples(x, leftExData, this->leftTick + 1);
-        //leftInPressureCurve->setSamples(x, leftInData, this->leftTick + 1);
+        leftInPressureCurve->setSamples(x, leftInData, this->leftTick + 1);
         leftPressurePlot->replot();
         leftStatusLabel->setText("Идет опрессовка, осталось " + QString::number(600 - this->leftTick) + " сек.");
         this->leftTick += 1;
@@ -1031,10 +1031,10 @@ void Qwt_MainWindow::rightNextTick()
 
         rightX[this->rightTick] = this->rightTick;
         rightExData[this->rightTick] = rightExchangerPressureEntry->text().toDouble();
-        rightInData[this->rightTick] = rightinPressureEntry->text().toDouble();
+        rightInData[this->rightTick] = 6.0;
 
         rightExchangerPressureCurve->setSamples(rightX, rightExData, this->rightTick + 1);
-        //rightInPressureCurve->setSamples(rightX, rightInData, this->rightTick + 1);
+        rightInPressureCurve->setSamples(rightX, rightInData, this->rightTick + 1);
         rightPressurePlot->replot();
         rightStatusLabel->setText("Идет опрессовка, осталось " + QString::number(600 - this->rightTick) + " сек.");
         this->rightTick += 1;
