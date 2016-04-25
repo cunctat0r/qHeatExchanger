@@ -112,13 +112,13 @@ void Algorythm::watchPumpTimer()
     switch (this->pumpNumber) {
     case 1:
         // нагнетающий насос
-        if (this->getPressure(this->sensorNumber) < 6) {
+        if (this->getPressure(this->sensorNumber) < 6.2) {
             if (this->pumpIsOff(this->pumpNumber)) {
                 emit pumpOn(this->pumpNumber);
                 //continue;
             }
         }
-        if (this->getPressure(this->sensorNumber) > 6.2) {
+        if (this->getPressure(this->sensorNumber) > 6.7) {
             if (this->pumpIsOn(this->pumpNumber)) {
                 emit pumpOff(this->pumpNumber);
                 //continue;
@@ -156,7 +156,7 @@ void Algorythm::watchPumpTimer()
         case 3:
             //qDebug("Etap is %d", this->etap);
             // Показать сообщение "После сброса воздуха закройте кран сброса"
-            if (this->getPressure(sensorNumber) >= 6.0) {
+            if (this->getPressure(sensorNumber) > 6.5) {
                 if (this->ptimer->isActive()) {
                     this->ptimer->stop();
                     emit etapStarted(this->etap);
